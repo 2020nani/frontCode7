@@ -1,53 +1,53 @@
-describe('dadosPessoa', () => {
-    it('Novo admin', () => {
-        cy.visit('http://localhost:3000');
-        cy.get('a').click();
-        cy.get('#name').click();
-        cy.get('#name').type('hernani');
+describe('dividas clientes', () => {
+    it('Option cliente nao estar vazio', () => {
+        cy.visit('http://localhost:3000/');
         cy.get('#email').click();
-        cy.get('#email').type('jr8@hotmail.com');
+        cy.get('#email').type('nani@hotmail.com');
         cy.get('#password').click();
         cy.get('#password').type('123456');
         cy.get('button').click();
-        cy.url().should('not.contain', '/cadastro')
+        cy.get('[data-testid=form]').submit();
+        cy.get('select')
+            .select('Leanne Graham').should('have.value', '1')
 
     });
 
-    it('Cadastro pessoa com Sucesso', () => {
+    it('Nao salva campo vazio', () => {
+        cy.visit('http://localhost:3000/');
         cy.visit('http://localhost:3000/');
         cy.get('#email').click();
-        cy.get('#email').type('jr8@hotmail.com');
+        cy.get('#email').type('nani@hotmail.com');
         cy.get('#password').click();
         cy.get('#password').type('123456');
         cy.get('button').click();
         cy.get('[data-testid=form]').submit();
-        cy.get('#firstname').click();
-        cy.get('#firstname').type('teste');
-        cy.get('#lastname').click();
-        cy.get('#lastname').type('teste');
-        cy.get('#participation').click();
-        cy.get('#participation').type('50');
-        cy.get('[data-testid=form]').submit();
-        cy.url().should('contain', '/home')
-    })
-    it('Erro validacao campos', () => {
-        cy.visit('http://localhost:3000/');
-        cy.get('#email').click();
-        cy.get('#email').type('jr8@hotmail.com');
-        cy.get('#password').click();
-        cy.get('#password').type('123456');
-        cy.get('button').click();
-        cy.get('[data-testid=form]').submit();
-        cy.get('button:nth-child(4)').click();
-        cy.get('[data-testid=form]').submit();
-        cy.get('[data-testid="form"] > span:nth-child(2)')
-            .should('contain', 'firstname is a required field');
-        cy.get('span:nth-child(4)')
-            .should('contain', 'lastname is a required field');
-        cy.get('span:nth-child(6)')
-            .should('contain',
-                'participation must be a `number` type, but the final value was: `NaN` (cast from the value `""`).');
+        cy.get('input:nth-child(4)').click();
+        cy.get('.sc-htoDjs > button:nth-child(1)').click();
+        cy.get('.formulario').submit();
 
+    })
+
+    it.only('Tem que Salvar objeto dividas', () => {
+        cy.visit('http://localhost:3000/home');
+        cy.get('#email').click();
+        cy.get('#email').type('nani@hotmail.com');
+        cy.get('#password').click();
+        cy.get('#password').type('123456');
+        cy.get('button').click();
+        cy.get('[data-testid=form]').submit();
+        cy.get('select').select('1')
+        cy.get('input:nth-child(4)').click();
+        cy.get('input:nth-child(4)').type('cartao');
+        cy.get('input:nth-child(6)').click();
+        cy.get('input:nth-child(6)').type('900.00');
+        cy.get('input:nth-child(8)').click();
+        cy.get('input:nth-child(8)').type('11/10/1987');
+        cy.get('.sc-htoDjs > button:nth-child(1)').click();
+        cy.get('.formulario').submit();
+        cy.url().should('contains', 'http://localhost:3000/index.js');
+        
+    
+        
     })
 
     it('Erro campo participation nao recebe letras', () => {
@@ -64,7 +64,7 @@ describe('dadosPessoa', () => {
         cy.get('#lastname').type('almeida');
         cy.get('#participation').click();
         cy.get('#participation').type('y');
-       // cy.get('button:nth-child(4)').click();
+        // cy.get('button:nth-child(4)').click();
         cy.get('[data-testid=form]').submit();
         cy.get('span:nth-child(4)')
             .should('contain',

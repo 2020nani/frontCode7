@@ -11,6 +11,7 @@ import React  from 'react';
 import { Container, ButtonForm } from './styles'
 import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
+import { toast } from 'react-toastify';
 import api from '../../services/api'
 
 const schema = Yup.object().shape({
@@ -48,14 +49,18 @@ export default function EditarDivida(props) {
 
             onSubmit={async (values, actions) => {
               const { usuarioId, motivoDivida, dataDivida, valorDivida } = values;
+              try{
               const response = await api.put(`dividas/${dividas._id}`, {
                 usuarioId,
                 motivoDivida,
                 dataDivida,
                 valorDivida
               })
-
+              toast.success('divida atualizada com sucesso!');
               window.location.href = 'index.js'
+            }catch(error){
+              toast.error('Erro ao atualizar divida');
+            }
               setTimeout(() => {
                 alert(JSON.stringify(values, null, 2));
                 actions.setSubmitting(false);

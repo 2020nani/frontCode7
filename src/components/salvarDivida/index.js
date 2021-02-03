@@ -11,6 +11,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, ButtonForm } from './styles'
 import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
+import { toast } from 'react-toastify';
 import api from '../../services/api'
 
 const schema = Yup.object().shape({
@@ -26,7 +27,7 @@ const schema = Yup.object().shape({
 export default function SalvarDivida() {
   const [pessoas, setPessoas] = useState([]);
 
-/* instancia todos os objetos Pessoas salvas na api JsonPlaceHolder na constante pessoas */
+  /* instancia todos os objetos Pessoas salvas na api JsonPlaceHolder na constante pessoas */
   useEffect(() => {
     async function listarPessoas() {
       const response = await api.get('https://jsonplaceholder.typicode.com/users');
@@ -36,7 +37,7 @@ export default function SalvarDivida() {
     listarPessoas()
   }, [])
 
-/* reseta objeto do formulario e atualliza pagina */
+  /* reseta objeto do formulario e atualliza pagina */
   function cancelar() {
 
     window.location.href = 'index.js'
@@ -54,29 +55,31 @@ export default function SalvarDivida() {
           valorDivida: ''
         }}
         validationSchema={schema}
-
-        onSubmit={async (values, actions) => {
+      
+        onSubmit={async (values, actions) =>{
           const { usuarioId, motivoDivida, dataDivida, valorDivida } = values;
-          const response = await api.post('dividas', {
+          await api.post('dividas', {
             usuarioId,
             motivoDivida,
             dataDivida,
             valorDivida
           })
-
+       
           window.location.href = 'index.js'
           setTimeout(() => {
             alert(JSON.stringify(values, null, 2));
             actions.setSubmitting(false);
           }, 1000);
+
+
+
         }}
       >
         {({
           touched,
           errors,
           handleSubmit,
-          isValid,
-          isSubmitting,
+         
         }) => (
           <Form className="formulario">
             <label>Cliente</label>
