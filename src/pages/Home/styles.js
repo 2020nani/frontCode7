@@ -32,7 +32,7 @@ export const Conteudo = styled.div`
 display:flex;
 justify-content:center;
 align-items:center;
-width: 98vw;
+width: 100vw;
 height:100vh;
 margin-left: 1vw;
 
@@ -51,9 +51,15 @@ button{
   align-items: center;
   margin-top:1vh;
   padding-left:1px;
-  width:350px;
-  height:50px;
+  width:300px;
+  height:10vh;
   font-size:1.5rem
+  @media (max-width:400px) {
+    font-size:1rem;
+    width:90px;
+    padding-left:0
+    margin-right:2vw
+  }
 }
 `
 export const ListButton = styled.div`

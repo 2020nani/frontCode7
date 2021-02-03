@@ -25,14 +25,14 @@ h1{
   margin-top: 5px;
   margin-left:10px;
   display:flex;
-  width:40vw;
+  width:60vw;
   flex-direction:column; 
 label{
     margin-top: 1vh;
 }
 select{
   margin-top: 1vh;
-  height:30px;
+  height:5vh;
   border: solid 1px;
   border-radius:5px;
   font-size: 1rem
@@ -40,15 +40,15 @@ select{
 input{
   margin-top: 1vh;
   padding-left:5px;
-  height:40px;
+  height:5vh;
   border: solid 1px;
   border-radius:5px;
   font-size: 1rem
 }
 button{
   margin-top: 1vh;
-  width: 100px;
-  height:40px;
+  width: 20vw;
+  height:4vh;
   border: solid 1px;
   border-radius:5px;
   font-size: 1rem
